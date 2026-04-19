@@ -16,6 +16,27 @@ const heatColor = (val, min, max) => {
   return `rgb(${r},${g},${b})`;
 };
 
+const renderPieLabel = ({ cx, cy, midAngle, outerRadius, percent, name }) => {
+  if (percent < 0.04) return null;
+  const RADIAN = Math.PI / 180;
+  const radius = outerRadius + 35;
+  const x = cx + radius * Math.cos(-midAngle * RADIAN);
+  const y = cy + radius * Math.sin(-midAngle * RADIAN);
+  const anchor = x > cx ? "start" : "end";
+  return (
+    <text
+      x={x}
+      y={y}
+      fill="#374151"
+      textAnchor={anchor}
+      dominantBaseline="central"
+      fontSize={11}
+    >
+      {`${name} (${(percent * 100).toFixed(1)}%)`}
+    </text>
+  );
+};
+
 const Visualize = ({ data, columns }) => {
   const numericCols = columns.filter((col) =>
     data.some((row) => !isNaN(row[col]) && row[col] !== "")
@@ -84,7 +105,9 @@ const Visualize = ({ data, columns }) => {
   const bucketSize = (histMax - histMin) / 10 || 1;
   const hist = Array.from({ length: 10 }, (_, i) => ({
     range: `${(histMin + i * bucketSize).toFixed(1)}`,
-    count: histVals.filter((v) => v >= histMin + i * bucketSize && v < histMin + (i + 1) * bucketSize).length,
+    count: histVals.filter(
+      (v) => v >= histMin + i * bucketSize && v < histMin + (i + 1) * bucketSize
+    ).length,
   }));
 
   const tabs = ["main", "scatter", "heatmap", "histogram"];
@@ -96,13 +119,12 @@ const Visualize = ({ data, columns }) => {
           <button key={t} onClick={() => setActiveTab(t)} className={activeTab === t ? "tab-active" : "tab"}>
             {t === "main" && "📊 Chart"}
             {t === "scatter" && "🔵 Scatter Plot"}
-            {t === "heatmap" && "🌡️ Heatmap"}
+            {t === "heatmap" && "🌡 Heatmap"}
             {t === "histogram" && "📉 Histogram"}
           </button>
         ))}
       </div>
 
-      {/* Main Chart */}
       {activeTab === "main" && (
         <div className="card">
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginBottom: "1rem", alignItems: "flex-end" }}>
@@ -135,10 +157,10 @@ const Visualize = ({ data, columns }) => {
                 </select>
               </div>
             )}
-            <button onClick={() => exportChart(mainChartRef, "chart")}>⬇️ Export PNG</button>
+            <button onClick={() => exportChart(mainChartRef, "chart")}>⬇ Export PNG</button>
           </div>
           <div ref={mainChartRef} style={{ background: "inherit", padding: "0.5rem" }}>
-            <ResponsiveContainer width="100%" height={380}>
+            <ResponsiveContainer width="100%" height={420}>
               {chartType === "bar" ? (
                 <BarChart data={aggregated} margin={{ top: 10, right: 20, left: 60, bottom: 5 }}>
                   <CartesianGrid strokeDasharray="3 3" />
@@ -168,9 +190,20 @@ const Visualize = ({ data, columns }) => {
                   <Line type="monotone" dataKey={yCol} stroke="#6366f1" />
                 </LineChart>
               ) : (
-                <PieChart>
-                  <Pie data={aggregated} dataKey={yCol} nameKey="name" cx="50%" cy="50%" outerRadius={140} label>
-                    {aggregated.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
+                <PieChart margin={{ top: 20, right: 60, bottom: 20, left: 60 }}>
+                  <Pie
+                    data={aggregated}
+                    dataKey={yCol}
+                    nameKey="name"
+                    cx="50%"
+                    cy="50%"
+                    outerRadius={110}
+                    labelLine={true}
+                    label={renderPieLabel}
+                  >
+                    {aggregated.map((_, i) => (
+                      <Cell key={i} fill={COLORS[i % COLORS.length]} />
+                    ))}
                   </Pie>
                   <Tooltip />
                   <Legend />
@@ -181,7 +214,6 @@ const Visualize = ({ data, columns }) => {
         </div>
       )}
 
-      {/* Scatter Plot */}
       {activeTab === "scatter" && (
         <div className="card">
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginBottom: "1rem", alignItems: "flex-end" }}>
@@ -197,7 +229,7 @@ const Visualize = ({ data, columns }) => {
                 {numericCols.map((col) => <option key={col} value={col}>{col}</option>)}
               </select>
             </div>
-            <button onClick={() => exportChart(scatterRef, "scatter")}>⬇️ Export PNG</button>
+            <button onClick={() => exportChart(scatterRef, "scatter")}>⬇ Export PNG</button>
           </div>
           <p style={{ fontSize: "0.82rem", color: "#64748b", marginBottom: "0.5rem" }}>Showing up to 500 data points</p>
           <div ref={scatterRef} style={{ background: "inherit", padding: "0.5rem" }}>
@@ -215,7 +247,6 @@ const Visualize = ({ data, columns }) => {
         </div>
       )}
 
-      {/* Heatmap */}
       {activeTab === "heatmap" && (
         <div className="card">
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginBottom: "1rem" }}>
@@ -237,7 +268,7 @@ const Visualize = ({ data, columns }) => {
                 {numericCols.map((col) => <option key={col} value={col}>{col}</option>)}
               </select>
             </div>
-            <button onClick={() => exportChart(heatRef, "heatmap")}>⬇️ Export PNG</button>
+            <button onClick={() => exportChart(heatRef, "heatmap")}>⬇ Export PNG</button>
           </div>
           <div ref={heatRef} style={{ overflowX: "auto", background: "inherit", padding: "0.5rem" }}>
             <table>
@@ -274,7 +305,6 @@ const Visualize = ({ data, columns }) => {
         </div>
       )}
 
-      {/* Histogram */}
       {activeTab === "histogram" && (
         <div className="card">
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginBottom: "1rem", alignItems: "flex-end" }}>
@@ -284,7 +314,7 @@ const Visualize = ({ data, columns }) => {
                 {numericCols.map((col) => <option key={col} value={col}>{col}</option>)}
               </select>
             </div>
-            <button onClick={() => exportChart(histRef, "histogram")}>⬇️ Export PNG</button>
+            <button onClick={() => exportChart(histRef, "histogram")}>⬇ Export PNG</button>
           </div>
           <div ref={histRef} style={{ background: "inherit", padding: "0.5rem" }}>
             <ResponsiveContainer width="100%" height={350}>
