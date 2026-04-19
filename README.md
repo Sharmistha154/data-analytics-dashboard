@@ -1,70 +1,61 @@
-# Getting Started with Create React App
+> Description :-
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A react based csv data analytics dashboard that allows users to upload CSV files and generate meaningful insights through interactive visualizations like bar charts, pie charts, scatter plots, and histograms. It is built to simplify data exploration for non-technical users while still offering powerful analytics capabilities.
 
-## Available Scripts
+> Features :-
+This dashboard is organized into multiple sections to help users easily explore, analyze, and manage their data:
 
-In the project directory, you can run:
+- Home  
+Upload CSV files and get an instant overview including total rows, columns, missing values, numeric and categorical columns, along with column names.  
 
-### `npm start`
+- Analytics  
+Explore the complete dataset in a structured table format with column-wise navigation and full data preview.  
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Insights  
+Generate deeper analysis including numerical and categorical insights, correlation matrix, and outlier detection using the IQR method. 
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Data Info  
+View detailed metadata such as column types, missing value percentages, unique values, and overall dataset statistics. 
 
-### `npm test`
+- Visualize  
+Create interactive charts like scatter plots, heatmaps, and histograms with customizable axes and chart types, and export visualizations as PNG files.  
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Data Cleaning  
+Clean and prepare data by removing duplicates, handling missing values,trimming whitespace, dropping incomplete rows, and removing selected columns, with an activity log for tracking changes.
 
-### `npm run build`
+- Reporting  
+Generate and export full reports as PDF or summary slide decks, with a built-in preview feature.  
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Dark/Light Mode  
+Switch between light and dark themes for a better user experience.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+> Application Preview :-
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Home Page  
+![Home](./screenshots/home-page.png)
 
-### `npm run eject`
+- File Upload  
+![Upload](./screenshots/upload.png)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- Analytics View  
+![Analytics](./screenshots/analytics.png)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Insights  
+![Insights 1](./screenshots/insights-1.png)  
+![Insights 2](./screenshots/insights-2.png)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- Data Info  
+![Data Info](./screenshots/data-info.png)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- Visualization  
+![Visualization](./screenshots/visualize.png)
 
-## Learn More
+- Data Cleaning  
+![Cleaning 1](./screenshots/data-clean-1.png)  
+![Cleaning 2](./screenshots/data-clean-2.png)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Reporting  
+![Report](./screenshots/report.png)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+> Conclusion :-
+A full featured data analytics dashboard designed to simplify data exploration, visualization, and reporting.
